@@ -94,6 +94,10 @@ Bash
 ```
 You will see output logs indicating the successful setup of services, registration of tasks/tools, and the launch of the Basic_Agent, Executor_Agent, and Planner_Agent.
 
+
+Once the agents are launched, to interact with them, you can use a simple A2A client to interact with your agents. There is one in the main swarm repository.
+
+
 📚 Learn More
 This factory implementation is built upon the robust multi-agent primitives provided by the main Swarm repository:
 
