@@ -65,6 +65,16 @@ Prerequisites
     export LLM_A2A_API_KEY=<YOUR-LLM-API-KEY>
     export LLM_PLANNER_API_KEY=<YOUR-LLM-API-KEY> # Can be the same key
     ```
+Before running `swarm_factory`, you need to launch the enablers (discovery_service, evaluation_service, memory_service, and a MCP server) from the `swarm` repository.
+
+Bash
+```bash
+git clone https://github.com/fcn06/swarm.git
+cd swarm
+./documentation/launch_enablers/run_all_commands.sh
+cd ..
+```
+
 Step 1: Clone and Build
 Bash
 ```bash
