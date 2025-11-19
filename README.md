@@ -1,4 +1,4 @@
-# 🏭 Swarm Factory Demo: Dynamic Multi-Agent System Bootstrapper 🚀
+# 🏭 Swarm Factory DEMO: Dynamic Multi-Agent System Bootstrapper 🚀
 
 The swarm_factory repository is the ultimate quickstart and reference implementation for the Agent Factory component of the Swarm framework.
 
@@ -57,17 +57,16 @@ You'll need a Rust environment and the LLM API keys set up as described in the m
 Prerequisites
 *   Install Rust: From rust-lang.org.
 
-*   Before running `swarm_factory`, you need to launch the enablers (discovery_service, evaluation_service, memory_service, and a MCP server) from the `swarm` repository. You need the environment variables set for your chosen LLM provider (e.g., Groq or Google AI Studio).
+*   Before running `swarm_factory demo`, you need to kickstart a MCP server. You can use the one from the main swarm repository:
 
     Bash
     ```bash
     git clone https://github.com/fcn06/swarm.git
     cd swarm
-    export LLM_JUDGE_API_KEY=<YOUR-LLM-API-KEY>
-    ./documentation/launch_enablers/run_all_commands.sh
+    cargo build --release --example main-server
+    ./target/release/examples/main-server --port 8000 --log-level "warn" all &
     cd ..
     ```
-
 
 *   Set LLM API Keys: You need the environment variables set for your chosen LLM provider (e.g., Groq or Google AI Studio).
 
@@ -76,6 +75,7 @@ Prerequisites
     # Replace <YOUR-LLM-API-KEY> with your key
     export LLM_A2A_API_KEY=<YOUR-LLM-API-KEY>
     export LLM_PLANNER_API_KEY=<YOUR-LLM-API-KEY> # Can be the same key
+    export LLM_JUDGE_API_KEY=<YOUR-LLM-API-KEY> # Can be the same key
     ```
 
 Step 1: Clone and Build
@@ -90,13 +90,17 @@ Execute the compiled binary. This will start all services (Discovery, Memory, et
 
 Bash
 ```bash
-./target/release/swarm_factory
+./target/release/swarm_factory --log-level "warn"
 ```
 You will see output logs indicating the successful setup of services, registration of tasks/tools, and the launch of the Basic_Agent, Executor_Agent, and Planner_Agent.
 
 
-Once the agents are launched, to interact with them, you can use a simple A2A client to interact with your agents. There is one in the main swarm repository.
+Once the agents are launched, to interact with them, you can use a simple A2A client to interact with your agents. There is one in the main swarm repository. Here is a sample call using this simple client
 
+Bash
+```bash
+./target/release/simple_workflow_agent_client --port 9590 --log-level "warn" --generation-type "dynamic_generation" --user-query "Who is Vivaldi ?"
+```
 
 📚 Learn More
 This factory implementation is built upon the robust multi-agent primitives provided by the main Swarm repository:

@@ -16,6 +16,13 @@ planner_agent={git = "https://github.com/fcn06/swarm.git"}
 executor_agent={git = "https://github.com/fcn06/swarm.git"}
 workflow_management={git = "https://github.com/fcn06/swarm.git"}
 
+
+# To be modified if you want to point out to other implementation of Memory, Evaluation, Discovery Services
+agent_discovery_service = {git = "https://github.com/fcn06/swarm.git"}
+agent_evaluation_service = {git = "https://github.com/fcn06/swarm.git"}
+agent_memory_service = {git = "https://github.com/fcn06/swarm.git"}
+
+
 # To be modified if you want to point out to other implementation of Memory, Evaluation, Discovery Services
 agent_service_adapters={git = "https://github.com/fcn06/swarm.git"}
 

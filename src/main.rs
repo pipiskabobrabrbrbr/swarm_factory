@@ -1,6 +1,6 @@
 use std::env;
 use std::sync::Arc;
-
+use tokio::task;
 use clap::Parser;
 
 use tracing::{info,error};
@@ -36,7 +36,10 @@ use executor_agent::business_logic::executor_agent::WorkFlowInvokers;
 
 use agent_service_adapters::{AgentEvaluationServiceAdapter, AgentMemoryServiceAdapter,AgentDiscoveryServiceAdapter};
 
-
+use agent_evaluation_service::evaluation_server::server::EvaluationServer;
+use configuration::AgentConfig;
+use agent_memory_service::memory_server::MemoryServer;
+use agent_discovery_service::discovery_server::server::DiscoveryServer;
 
 /// Command-line arguments
 #[derive(Parser, Debug)]
@@ -51,12 +54,14 @@ struct Args {
     /// MCP Config
     #[clap(long, default_value = "./configuration/mcp_runtime_config.toml")]
     mcp_config_path: String,
-    #[clap(long, default_value = "http://127.0.0.1:4000")]
-    discovery_service_url: String,
-    #[clap(long, default_value = "http://127.0.0.1:5000")]
-    memory_service_url: String,
-    #[clap(long, default_value = "http://127.0.0.1:7000")]
-    evaluation_service_url: String,
+    #[clap(long, default_value = "./configuration/agent_judge_config.toml")]
+    judge_config_file: String,
+    #[clap(long, default_value = "0.0.0.0:4000")]
+    discovery_service_uri: String,
+    #[clap(long, default_value = "0.0.0.0:5000")]
+    memory_service_uri: String,
+    #[clap(long, default_value = "0.0.0.0:7000")]
+    evaluation_service_uri: String,
 }
 
 /***********************************************************************************/
@@ -164,6 +169,9 @@ async fn register_tools(mcp_config_path: String,discovery_service: Arc<dyn Disco
 // End of Registration Tasks and Tools
 /***********************************************************************************/
 
+//#[tokio::main]
+//async fn main() -> anyhow::Result<()> {
+
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>>{
@@ -177,6 +185,58 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     /************************************************/ 
     let factory_config = FactoryConfig::load_factory_config(&args.config_file).expect("Incorrect Factory Config File");
 
+
+  
+    /************************************************/
+    /* Initializing Discovery S                     */
+    /************************************************/ 
+    let discovery_server=DiscoveryServer::new(args.discovery_service_uri.clone()).await?;
+
+    /************************************************/
+    /* Initializating Memory Server                 */
+    /************************************************/ 
+    let memory_server=MemoryServer::new(args.memory_service_uri.clone()).await?;
+   
+    /************************************************/
+    /* Initializing Evaluation Server               */
+    /************************************************/ 
+    let agent_config = AgentConfig::load_agent_config(&args.judge_config_file).expect("Judge COnfig FIle not found");
+    let agent_api_key = env::var("LLM_JUDGE_API_KEY").expect("LLM_JUDGE_API_KEY must be set");
+    let evaluation_server = EvaluationServer::new(args.evaluation_service_uri.clone(),agent_config,agent_api_key).await?;
+
+    /************************************************/
+    /* Launch the Three Servers                     */
+    /* THIS WILL NOT BLOCK AFTER INITIALIZATION */
+    /************************************************/ 
+
+    // We use `tokio::spawn` so they run concurrently without blocking the main thread
+    task::spawn(async move {
+        println!("Starting Discovery Server...");
+        if let Err(e) = discovery_server.start_http().await {
+            eprintln!("Discovery Server crashed: {}", e);
+        }
+    });
+
+    task::spawn(async move {
+        println!("Starting Memory Server...");
+        if let Err(e) = memory_server.start_http().await {
+            eprintln!("Memory Server crashed: {}", e);
+        }
+    });
+
+    task::spawn(async move {
+        println!("Starting Evaluation Server...");
+        if let Err(e) = evaluation_server.start_http().await {
+            eprintln!("Evaluation Server crashed: {}", e);
+        }
+    });
+
+    // Wait briefly for servers to bind to their ports
+    // Without this, your client might try to connect before the servers are ready.
+    println!("Waiting for servers to initialize...");
+    tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
+
+    
     /************************************************/
     /* Instantiate Memory, Evaluation and Discovery Services  */
     /************************************************/ 
@@ -242,7 +302,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
         /************************************************/
         /* Launch Domain Agent with MCP                 */
         /************************************************/ 
-
 
     let factory_mcp_runtime_config = FactoryMcpRuntimeConfig::builder()
         .with_factory_mcp_llm_provider_url(LlmProviderUrl::Groq)
@@ -351,7 +410,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     /************************************************/
     /* End Launch Agents from Factory               */
     /************************************************/ 
-
+    
 
     Ok(())
 }
