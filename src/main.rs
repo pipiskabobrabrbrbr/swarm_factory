@@ -1,3 +1,15 @@
+/***********************************************************************************/
+// This is a refernce implementation , demonstrating how you can use swarm crate
+// ( https://github.com/fcn06/swarm ) to build an agentic ecosystem.
+// You will find :
+// * How to launch a discovery Service
+// * How to launch a memory Service
+// * how to launch an evaluation service
+// * How to create and launch an AGent Factory
+// * How to launch agents ( Domain Specialist, Planner, Executor) from Factory
+/***********************************************************************************/
+
+
 use std::env;
 use std::sync::Arc;
 use tokio::task;
@@ -63,6 +75,7 @@ struct Args {
     #[clap(long, default_value = "0.0.0.0:7000")]
     evaluation_service_uri: String,
 }
+
 
 /***********************************************************************************/
 // Initialization of evaluation, memory, discovery services
@@ -186,28 +199,31 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     let factory_config = FactoryConfig::load_factory_config(&args.config_file).expect("Incorrect Factory Config File");
 
 
-  
     /************************************************/
-    /* Initializing Discovery S                     */
+    /* Launching Discovery,Memory,Evaluation Server */
     /************************************************/ 
+  
+        /************************************************/
+        /* Initializing Discovery Server                */
+        /************************************************/ 
     let discovery_server=DiscoveryServer::new(args.discovery_service_uri.clone()).await?;
 
-    /************************************************/
-    /* Initializating Memory Server                 */
-    /************************************************/ 
+        /************************************************/
+        /* Initializating Memory Server                 */
+        /************************************************/ 
     let memory_server=MemoryServer::new(args.memory_service_uri.clone()).await?;
-   
-    /************************************************/
-    /* Initializing Evaluation Server               */
-    /************************************************/ 
+    
+        /************************************************/
+        /* Initializing Evaluation Server               */
+        /************************************************/ 
     let agent_config = AgentConfig::load_agent_config(&args.judge_config_file).expect("Judge COnfig FIle not found");
     let agent_api_key = env::var("LLM_JUDGE_API_KEY").expect("LLM_JUDGE_API_KEY must be set");
     let evaluation_server = EvaluationServer::new(args.evaluation_service_uri.clone(),agent_config,agent_api_key).await?;
 
-    /************************************************/
-    /* Launch the Three Servers                     */
-    /* THIS WILL NOT BLOCK AFTER INITIALIZATION */
-    /************************************************/ 
+        /************************************************/
+        /* Launch the Three Servers                     */
+        /* THIS WILL NOT BLOCK AFTER INITIALIZATION */
+        /************************************************/ 
 
     // We use `tokio::spawn` so they run concurrently without blocking the main thread
     task::spawn(async move {
@@ -236,36 +252,42 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
     println!("Waiting for servers to initialize...");
     tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
 
-    
+
     /************************************************/
-    /* Instantiate Memory, Evaluation and Discovery Services  */
+    /* Loading Factory Config File                  */
+    /* Creating Agent Factory                       */
     /************************************************/ 
+
+
+        /************************************************/
+        /* Instantiate Memory, Evaluation and Discovery Services  */
+        /************************************************/ 
     let evaluation_service = setup_evaluation_service(&factory_config.factory_evaluation_service_url.clone().expect("Factory Evaluation Service URL not set")).await;
     let memory_service = setup_memory_service(&factory_config.factory_memory_service_url.clone().expect("Factory Memory Service URL not set")).await;
     let discovery_service = setup_discovery_service(&factory_config.factory_discovery_url).await;
    
-    /************************************************/
-    /* Set Up Registrations via discovery service   */
-    /* Only Tasks and Tools need to be registered   */
-    /* Agents Self Register at Launch               */
-    /************************************************/ 
+        /************************************************/
+        /* Set Up Registrations via discovery service   */
+        /* Only Tasks and Tools need to be registered   */
+        /* Agents Self Register at Launch               */
+        /************************************************/ 
     register_tasks(discovery_service.clone()).await?;
     register_tools(args.mcp_config_path.clone(),discovery_service.clone()).await?;
 
-    /************************************************/
-    /* Launch Agents from Factory                   */
-    /************************************************/ 
+        /************************************************/
+        /* Launch Agents from Factory                   */
+        /************************************************/ 
 
-    /************************************************/
-    /* Set Up Invokers                               */
-    /************************************************/ 
+        /************************************************/
+        /* Set Up Invokers                               */
+        /************************************************/ 
     let task_invoker= setup_task_invoker().await?;
     let tool_invoker = setup_tool_invoker(args.mcp_config_path.clone()).await?;
     let agent_invoker= setup_agent_invoker_v2(discovery_service.clone()).await?;
 
-    /************************************************/
-    /* Get a Workflow Invokers Instance           */
-    /************************************************/ 
+        /************************************************/
+        /* Get a Workflow Invokers Instance           */
+        /************************************************/ 
     let workflow_invokers = WorkFlowInvokers::init(
         task_invoker.clone(),
         agent_invoker.clone(),
@@ -274,9 +296,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
 
     let workflow_invokers: Option<Arc<dyn WorkflowServiceApi>> = Some(Arc::new(workflow_invokers));
 
-    /************************************************/
-    /* Launch Agent Factory                         */
-    /************************************************/ 
+        /************************************************/
+        /* Launch Agent Factory                         */
+        /************************************************/ 
 
     // Launch Agent Factory
     let agent_factory=AgentFactory::new(factory_config.clone(),
@@ -285,14 +307,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
                                 evaluation_service,
                                     workflow_invokers);
 
-    /************************************************/
-    /* Set Up Registrations via discovery service           */
-    /************************************************/ 
-    //register_tasks(agent_factory.factory_discovery_service.clone()).await?;
-    //register_tools(args.mcp_config_path.clone(),agent_factory.factory_discovery_service.clone()).await?;
+
 
     /************************************************/
-    /* Launch Planner and Executor Agents from Factory             */
+    /* Launch Agents from Factory                   */
     /************************************************/ 
 
     let mut handles = vec![];

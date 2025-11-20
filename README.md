@@ -5,6 +5,13 @@ The swarm_factory repository is the ultimate quickstart and reference implementa
 It demonstrates how to programmatically instantiate, configure, and connect a fully-functional multi-agent ecosystem—a process essential for building truly dynamic and adaptive AI solutions.
 
 ✨ What Does This Demo Do?
+This is a reference implementation, demonstrating how you can use the `swarm` crate (https://github.com/fcn06/swarm) to build an agentic ecosystem. You will find:
+* How to launch a Discovery Service
+* How to launch a Memory Service
+* How to launch an Evaluation Service
+* How to create and launch an Agent Factory
+* How to launch agents (Domain Specialist, Planner, Executor) from the Factory
+
 This project bootstraps a minimal, self-contained multi-agent system by launching three core agents using the AgentFactory:
 
 *   Specialist Agent (Basic_Agent): A core worker, launched with an MCP Runtime for tool/service interaction.
