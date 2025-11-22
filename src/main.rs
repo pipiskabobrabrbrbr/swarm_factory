@@ -64,9 +64,9 @@ struct Args {
     #[clap(long, default_value = "warn")]
     log_level: String,
     /// MCP Config
-    #[clap(long, default_value = "./configuration/mcp_runtime_config.toml")]
+    #[clap(long, default_value = "configuration/mcp_runtime_config.toml")]
     mcp_config_path: String,
-    #[clap(long, default_value = "./configuration/agent_judge_config.toml")]
+    #[clap(long, default_value = "configuration/agent_judge_config.toml")]
     judge_config_file: String,
     #[clap(long, default_value = "0.0.0.0:4000")]
     discovery_service_uri: String,
@@ -353,6 +353,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>>{
         Err(e) => error!("Failed to launch Basic Agent: {:?}", e),
     }
     
+    println!("\n");
+
         /************************************************/
         /* Launch Planner and Executor                  */
         /************************************************/ 
